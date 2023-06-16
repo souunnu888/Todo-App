@@ -1,0 +1,190 @@
+.App{
+  text-align: center;
+}
+body{
+  box-sizing: border-box;
+  background-color:whitesmoke;
+  width: 100%;
+}
+h1,h2,h3,h4,h5,h6,p,div{
+  margin: 0;
+}
+
+/* --------------------- NAVBAR STYLES --------------------- */
+.navbar{
+  margin:0;
+  width: 90%;
+  height:60px;
+  margin: auto;
+  margin-top: 20px;
+  /* border:1px solid green; */
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  position: sticky;
+  color: rgb(53, 52, 52);
+}
+
+.sort{
+  width: 200px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+.sort--icon{
+  width: 12%;
+}
+
+.sort--text{
+  font-size: 0.8rem;
+  margin-right: 10px;
+}
+
+.filter--icon{
+  width: 9%;
+  margin-left:20px;
+}
+
+.filter--text{
+  font-size: 0.8rem;
+  margin-right: 10px;
+}
+
+.greet{
+  width: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.sun--icon{
+  width: 15%;
+}
+.nav--title
+{
+  font-size: 1.5rem;
+}
+
+
+/* -------------------INPUT STYLES------------------------------- */
+
+.input{
+  width: 80%;
+  height: 3rem;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+  margin-top: 40px;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  padding-left:25px;
+  color: rgb(53, 52, 52);
+  
+}
+
+.input:focus {
+  outline: none;
+  border-color: rgb(37, 109, 241);
+  box-shadow: 0 0 5px rgb(37, 109, 241);
+}
+.input::placeholder{
+  /* color:rgb(75, 130, 231) ;  */
+  color: rgb(37, 109, 241);
+  font-size: 16px;
+}
+.input--button{
+  font-size: 20px;
+  border: 1px solid rgb(37, 109, 241);
+  color: rgb(37, 109, 241);
+  border-radius: 50%;
+  width: 43px;
+  height: 43px;
+  margin-left: 15px;
+}
+.input--button:hover{
+  background-color:rgb(37, 109, 241);
+  color: white;
+  cursor: pointer;
+}
+.task--section{
+  margin: auto;
+}
+.task{
+  width: 70%;
+  display: flex;
+  margin: auto;
+  margin-top: 30px;
+  align-items: center;
+}
+.task--heading{
+  cursor: pointer;
+}
+.task--title{
+  width: 4rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.completed--task--title{
+  width:20%;
+  display: flex;
+}
+.completed--task--downarrow{
+  width:9%;
+  margin-right: 10px;
+}
+.task--downarrow{
+  width: 30%;
+ 
+}
+
+.custom--hr {
+  border: none;
+  height: 1px;
+  background-color: coral;
+}
+
+.todo{
+  width: 71%;
+  height: 3rem;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+  margin-left:241px;
+  margin-top: 20px;
+  border-radius: 10px;
+  background-color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.todo--right{
+   margin-left: 25px;
+   display: flex;
+}
+.todo--right>p{
+   text-decoration: line-through;
+}
+
+.todo--right>input{
+  width: 16px;
+  height: 16px;
+  appearance: none;
+  border: 2px solid rgb(75, 130, 231) ;
+  border-radius: 50%;
+  outline: none;
+  margin-right: 20px;
+}
+
+.todo--right>input:checked{
+  background-color:rgb(75, 130, 231) ;
+}
+.todo--left{
+  width: 80px;
+}
+
+.todo--toggle{
+  width: 25%;
+  margin-right: 20px;
+}
+
+.todo--delete{
+  width: 20px;
+}
