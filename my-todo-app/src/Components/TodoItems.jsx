@@ -11,7 +11,7 @@ export default function TodoItems(props) {
            <div className="todo">
            <div className="todo--right ">
                 <input type="radio" onClick={()=>radioButtonClick(id , title)}/>
-                {title} 
+                {title}
             </div>
             <div className="todo--left">
             <img src={status? orangestar : star}

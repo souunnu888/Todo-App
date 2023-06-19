@@ -4,6 +4,8 @@ import filtericon from "../Images/filer1.png";
 import sun from "../Images/sun.png";
 
 export default function Navbar(props){
+  // console.log(props);
+  const {filtered , handleFilter} = props;
     const currentDate = new Date();
 
   const options = {
@@ -28,8 +30,7 @@ export default function Navbar(props){
             
             <img className="sort--icon" src={myImage} alt="" />
            <p className="sort--text">Sort</p>
-           <img className="filter--icon" src={filtericon} alt="" />
-           <p className="filter--text" onClick={props.handleFilter}>Filter</p>
+           <button className="favorite--button" onClick={handleFilter}>{filtered ? "All Tasks" : "Favorites"}</button>
            
            </div>
        </nav>

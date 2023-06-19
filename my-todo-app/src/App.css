@@ -63,7 +63,16 @@ h1,h2,h3,h4,h5,h6,p,div{
 {
   font-size: 1.5rem;
 }
-
+.favorite--button{
+  border: none;
+  color:rgb(53, 52, 52);
+  cursor: pointer;
+  margin-left: 20px;
+  background-color: whitesmoke;
+}
+.favorite--button:hover{
+  color: black;
+}
 
 /* -------------------INPUT STYLES------------------------------- */
 
@@ -77,7 +86,6 @@ h1,h2,h3,h4,h5,h6,p,div{
   font-size: 16px;
   padding-left:25px;
   color: rgb(53, 52, 52);
-  
 }
 
 .input:focus {
