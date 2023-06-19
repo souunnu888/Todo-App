@@ -5,7 +5,7 @@ import sun from "../Images/sun.png";
 
 export default function Navbar(props){
   // console.log(props);
-  const {filtered , handleFilter} = props;
+  const {filtered , handleFilter, handleSortingFunc} = props;
     const currentDate = new Date();
 
   const options = {
@@ -28,8 +28,8 @@ export default function Navbar(props){
            <h1 className="nav--title">Insure Pro 2.0 Todo App</h1>
            <div className="sort">
             
-            <img className="sort--icon" src={myImage} alt="" />
-           <p className="sort--text">Sort</p>
+            {/* <img className="sort--icon" src={myImage} alt="" />
+           <p className="sort--text" onClick={()=>handleSortingFunc}>Sort</p> */}
            <button className="favorite--button" onClick={handleFilter}>{filtered ? "All Tasks" : "Favorites"}</button>
            
            </div>

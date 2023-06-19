@@ -26,11 +26,11 @@ export default function Todo() {
           title: text,
           status: false,
           id: Date.now(),
+          created:new Date().getTime(),
         };
         setTodos((prevstate)=>[newTodo,...prevstate]);
  };
 
- 
   const handleTaskArrow = () =>{
           setArrow((previousArrow) => !previousArrow)
   }
@@ -39,7 +39,7 @@ export default function Todo() {
           setCompletedTaskArrowArrow((previousArrow) => !previousArrow)
   }
 
-
+ 
 
 
   const handleFavorite = (id) => {
@@ -102,9 +102,6 @@ export default function Todo() {
         setIsCompleted(updatedTodos);
   }
 
-  
-
-
   return (
     <>
       <div>
@@ -112,7 +109,10 @@ export default function Todo() {
 
         <AddTodo handleAddTodo={handleAddTodo} />
 
-        {filtered ? todos.length>0 &&  <TaskTitle title = "Favorites" handleTaskArrow={handleTaskArrow} arrow= {arrow}  handleAddTodo={handleAddTodo}/> : todos.length>0 &&  <TaskTitle title = "Tasks" handleTaskArrow={handleTaskArrow} arrow= {arrow}  handleAddTodo={handleAddTodo}/>}
+        {filtered ? todos.length>0 &&  <TaskTitle title = "Favorites" handleTaskArrow={handleTaskArrow} arrow= {arrow}  handleAddTodo={handleAddTodo}/>
+                  : todos.length>0 &&  <TaskTitle title = "Tasks" handleTaskArrow={handleTaskArrow} arrow= {arrow}  handleAddTodo={handleAddTodo}/>}
+
+        {todos.length>0 && <span className="task--timestamp">{new Date().toLocaleDateString()}</span>}
 
        {filtered ? arrow?  allTask.map((el, i) => (
             <TodoItems
@@ -143,17 +143,22 @@ export default function Todo() {
               <div className="alltodos">
               <div className="todo">
                 <div className="todo--right ">
-                    <input type="radio" checked onClick={()=>toggleCompletedTasks(el.id,el.title)}/>
+                    <input type="radio" checked onClick={()=>toggleCompletedTasks(el.id,el.title)}/> 
                     <p >{el.title}</p>
                 </div>
                 <div className="todo--left">
-                    {/* <img src={el.status? orangestar : star} className="todo--toggle" onClick={() => handleCompletedFavorite(el.id)} alt="" /> */}
                     <img src={reddelete} className="todo--delete" onClick={() => handleDeleteCompletedTask(el.id)} alt=""/>
                 </div>
              </div>
              </div> 
              )) :""}
 
+
+             <div className="todo--app">
+                <footer className="footer">
+                    <p>@Powered by Insure Pro 2.0</p>
+                </footer>
+            </div>
       </div>
     </>
   );
