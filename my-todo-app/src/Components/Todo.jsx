@@ -16,6 +16,7 @@ export default function Todo() {
   const [completedTaskArrow,setCompletedTaskArrowArrow] = useState(true);
   const [allTask,setAllTask] = useState([])
   const [filtered,setFiltered] = useState(false)
+  const [ascend, setAscend]= useState(false)
 
 
 
@@ -40,7 +41,13 @@ export default function Todo() {
   }
 
  
-
+  const handleSortingFunc = () =>{
+    let originalTodo = JSON.parse(JSON.stringify(todos)) // deep 
+    let updatedAscend = !ascend;
+    let sortedTodo= updatedAscend ? originalTodo.sort( (a,b) => a.id- b.id) : originalTodo.sort( (a,b) => b.id- a.id) 
+    setTodos(sortedTodo)
+    setAscend(updatedAscend)
+  }
 
   const handleFavorite = (id) => {
         const updateTodos = todos.map((todo) =>
@@ -105,7 +112,7 @@ export default function Todo() {
   return (
     <>
       <div>
-        <Navbar filtered={filtered} handleFilter = {handleFilter}/>
+        <Navbar filtered={filtered} handleFilter = {handleFilter} handleSortingFunc={handleSortingFunc}/>
 
         <AddTodo handleAddTodo={handleAddTodo} />
 
