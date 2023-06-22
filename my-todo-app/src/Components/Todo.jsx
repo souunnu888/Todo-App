@@ -5,7 +5,8 @@ import Navbar from "./Navbar";
 import TaskTitle from "./TaskTitle";
 import reddelete from "../Images/reddelete.png";
 import CompletedTasksTitle from "./CompletedTasksTitle";
-
+import CompletedTodoItems from "./CompletedTodoItems";
+import Footer from "./Footer"
 
 
 
@@ -35,6 +36,7 @@ export default function Todo() {
     sessionStorage.setItem("Todos",JSON.stringify(updatedTodos));
   }
 
+sessionStorage.setItem("task",true);
 
 
   const handleAddTodo = (text) => {
@@ -169,25 +171,15 @@ export default function Todo() {
         {filtered ? "" : isCompleted.length>0 && <CompletedTasksTitle title = "Completed Tasks" handleCompletedTaskArrow={handleCompletedTaskArrow} arrow= {completedTaskArrow}/>}
         {filtered? "" : completedTaskArrow ?
              isCompleted.map((el,i)=>(
-              <div className="all--todos">
-              <div className="todo">
-                <div className="todo--right ">
-                    <input type="radio" checked onClick={()=>toggleCompletedTasks(el.id,el.title)}/> 
-                    <p >{el.title}</p>
-                </div>
-                <div className="todo--left">
-                    <img src={reddelete} className="todo--delete" onClick={() => handleDeleteCompletedTask(el.id)} alt=""/>
-                </div>
-             </div>
-             </div> 
+              <CompletedTodoItems
+               key={el.id}
+               id={el.id}
+              title={el.title}
+              status={el.status}
+              toggleCompletedTasks={toggleCompletedTasks}
+              handleDeleteCompletedTask={handleDeleteCompletedTask}/>
              )) :""}
-
-
-             <div className="todo--app">
-                <footer className="footer">
-                    <p>@Powered by Insure Pro 2.0</p>
-                </footer>
-            </div>
+            <Footer/>
       </div>
     </>
   );

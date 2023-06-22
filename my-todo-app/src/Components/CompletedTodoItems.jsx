@@ -1,21 +1,18 @@
 import reddelete from "../Images/reddelete.png";
-import star from "../Images/star.png";
-import orangestar from "../Images/orangestar.png";
 
 export default function CompletedTodoItems(props){
-    const {id,status,title,handleDelete,handleToggle,radioButtonClick} = props;
+    const {id, title,toggleCompletedTasks,handleDeleteCompletedTask} = props;
 
 
-    return <div className="alltodos">
-              <div className="todo">
+    return <div className="all--todos">
+                <div className="todo">
                 <div className="todo--right ">
-                    <input type="radio"/>
-                    {title} 
+                    <input type="radio" checked onClick={()=>toggleCompletedTasks(id,title)}/> 
+                    <p >{title}</p>
                 </div>
                 <div className="todo--left">
-                    <img src={status? orangestar : star} className="todo--toggle" onClick={() => handleToggle(id)} alt="" />
-                    <img src={reddelete} className="todo--delete" onClick={() => handleDelete(id)} alt=""/>
+                    <img src={reddelete} className="todo--delete" onClick={() => handleDeleteCompletedTask(id)} alt=""/>
                 </div>
-             </div>
-             </div> 
+            </div>
+            </div>  
 }
