@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TodoItems from "./TodoItems";
 import AddTodo from "./AddTodo";
 import Navbar from "./Navbar";
@@ -10,7 +10,8 @@ import CompletedTasksTitle from "./CompletedTasksTitle";
 
 
 export default function Todo() {
-  const [todos, setTodos] = useState([]);
+  const storedTodos = JSON.parse(sessionStorage.getItem("Todos") || "[]"); // getting stored Todos from session storage
+  const [todos, setTodos] = useState(storedTodos);
   const [isCompleted,setIsCompleted] = useState([])
   const [arrow,setArrow] = useState(true);
   const [completedTaskArrow,setCompletedTaskArrowArrow] = useState(true);
@@ -18,7 +19,21 @@ export default function Todo() {
   const [filtered,setFiltered] = useState(false)
   const [ascend, setAscend]= useState(false)
 
+  // Tried to use useEffect Hook for storing data in session storage
+ 
+  // useEffect(()=>{
+  //     const storedTodos = JSON.parse(sessionStorage.getItem("Todos") || "[]");
+  //     setTodos(storedTodos);
+  // },[])
 
+  // useEffect(()=>{
+  //     sessionStorage.setItem("Todos",JSON.stringify(todos));
+  // },[todos])
+
+
+  const saveTaskToStorage = (updatedTodos) =>{
+    sessionStorage.setItem("Todos",JSON.stringify(updatedTodos));
+  }
 
 
 
@@ -29,7 +44,9 @@ export default function Todo() {
           id: Date.now(),
           created:new Date().getTime(),
         };
-        setTodos((prevstate)=>[newTodo,...prevstate]);
+        const updatedTodos = [newTodo , ...todos]
+        setTodos(updatedTodos);
+        saveTaskToStorage(updatedTodos)
  };
 
   const handleTaskArrow = () =>{
@@ -46,6 +63,7 @@ export default function Todo() {
     let updatedAscend = !ascend;
     let sortedTodo= updatedAscend ? originalTodo.sort( (a,b) => a.id- b.id) : originalTodo.sort( (a,b) => b.id- a.id) 
     setTodos(sortedTodo)
+    saveTaskToStorage(sortedTodo)
     setAscend(updatedAscend)
   }
 
@@ -53,7 +71,8 @@ export default function Todo() {
         const updateTodos = todos.map((todo) =>
               todo.id === id ? { ...todo, status: !todo.status } : todo
         );
-        setTodos(updateTodos);
+        setTodos(updateTodos); 
+        saveTaskToStorage(updateTodos)
   };
 
 
@@ -72,6 +91,7 @@ export default function Todo() {
   const handleDeleteTask = (id) => {
         const deleteTodos = todos.filter((todo) => todo.id !== id);
         setTodos(deleteTodos);
+        saveTaskToStorage(deleteTodos)
   };
 
 
@@ -93,6 +113,7 @@ export default function Todo() {
           };
         setIsCompleted([...isCompleted,newTodo])
         setTodos(updatedTodos);
+        saveTaskToStorage(updatedTodos)
   };
 
 
@@ -105,7 +126,9 @@ export default function Todo() {
           status: false,
           id: id,
         };
-        setTodos([...todos,newTodo]);
+        const updateTodos = [...todos , newTodo]
+        setTodos(updateTodos);
+        saveTaskToStorage(updateTodos)
         setIsCompleted(updatedTodos);
   }
 
@@ -144,10 +167,9 @@ export default function Todo() {
           )) : ""}
 
         {filtered ? "" : isCompleted.length>0 && <CompletedTasksTitle title = "Completed Tasks" handleCompletedTaskArrow={handleCompletedTaskArrow} arrow= {completedTaskArrow}/>}
-
         {filtered? "" : completedTaskArrow ?
              isCompleted.map((el,i)=>(
-              <div className="alltodos">
+              <div className="all--todos">
               <div className="todo">
                 <div className="todo--right ">
                     <input type="radio" checked onClick={()=>toggleCompletedTasks(el.id,el.title)}/> 

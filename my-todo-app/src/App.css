@@ -100,7 +100,7 @@ h1,h2,h3,h4,h5,h6,p,div{
   color: rgb(37, 109, 241);
   font-size: 16px;
 }
-.input--button{
+/* .input--button{
   font-size: 20px;
   border: 1px solid rgb(37, 109, 241);
   color: rgb(37, 109, 241);
@@ -113,12 +113,12 @@ h1,h2,h3,h4,h5,h6,p,div{
   background-color:rgb(37, 109, 241);
   color: white;
   cursor: pointer;
-}
+} */
 .task--section{
   margin: auto;
 }
 .task{
-  width: 70%;
+  width: 80%;
   display: flex;
   margin: auto;
   margin-top: 30px;
@@ -134,29 +134,33 @@ h1,h2,h3,h4,h5,h6,p,div{
   justify-content: space-between;
 }
 .completed--task--title{
-  width:20%;
+  width:10rem;
   display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 .completed--task--downarrow{
-  width:9%;
-  margin-right: 10px;
+  width:12%;
 }
 .task--downarrow{
   width: 30%;
  
 }
 
-.custom--hr {
+/* .custom--hr {
   border: none;
   height: 1px;
   background-color: coral;
+} */
+.all--todos{
+  width: 80%;
+  margin: auto;
 }
 
 .todo{
-  width: 71%;
+  width: 100%;
   height: 3rem;
   box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
-  margin-left:241px;
   margin-top: 10px;
   border-radius: 10px;
   background-color: white;
@@ -168,6 +172,7 @@ h1,h2,h3,h4,h5,h6,p,div{
 .todo--right{
    margin-left: 25px;
    display: flex;
+   align-items: center;
 }
 .todo--right>p{
    text-decoration: line-through;

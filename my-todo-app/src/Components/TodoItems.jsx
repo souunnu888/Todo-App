@@ -6,7 +6,7 @@ export default function TodoItems(props) {
     const { id, title, status,handleToggle, handleDelete,radioButtonClick} = props;
 
     return (
-      <div className="alltodos">
+      <div className="all--todos">
            <div className="todo">
            <div className="todo--right ">
                 <input type="radio" onClick={()=>radioButtonClick(id , title)}/>
