@@ -11,9 +11,12 @@ import Footer from "./Footer"
 
 
 export default function Todo() {
-  const storedTodos = JSON.parse(sessionStorage.getItem("Todos") || "[]"); // getting stored Todos from session storage
+  // const storedTodos = JSON.parse(sessionStorage.getItem("Todos") || "[]"); 
+  // const storedCompletedTodos = JSON.parse(sessionStorage.getItem("CompletedTodos") || "[]");// getting stored Todos from session storage
+  const storedTodos = JSON.parse(localStorage.getItem("Todos") || "[]");
+  const storedCompletedTodos = JSON.parse(localStorage.getItem("CompletedTodos") || "[]");
   const [todos, setTodos] = useState(storedTodos);
-  const [isCompleted,setIsCompleted] = useState([])
+  const [isCompleted,setIsCompleted] = useState(storedCompletedTodos)
   const [arrow,setArrow] = useState(true);
   const [completedTaskArrow,setCompletedTaskArrowArrow] = useState(true);
   const [allTask,setAllTask] = useState([])
@@ -33,10 +36,13 @@ export default function Todo() {
 
 
   const saveTaskToStorage = (updatedTodos) =>{
-    sessionStorage.setItem("Todos",JSON.stringify(updatedTodos));
+   // sessionStorage.setItem("Todos",JSON.stringify(updatedTodos));
+   localStorage.setItem("Todos",JSON.stringify(updatedTodos));
   }
 
-sessionStorage.setItem("task",true);
+  const saveCompletedTaskToStorage = (updatedTodos) => {
+    localStorage.setItem("CompletedTodos",JSON.stringify(updatedTodos))
+  }
 
 
   const handleAddTodo = (text) => {
@@ -100,6 +106,7 @@ sessionStorage.setItem("task",true);
   const handleDeleteCompletedTask = (id) => {
         const deleteTodos = isCompleted.filter((todo) => todo.id !== id);
         setIsCompleted(deleteTodos);
+        saveCompletedTaskToStorage(deleteTodos)
   };
 
 
@@ -113,7 +120,9 @@ sessionStorage.setItem("task",true);
             status: false,
             id: id,
           };
-        setIsCompleted([...isCompleted,newTodo])
+          let updateTask = [...isCompleted,newTodo]
+        setIsCompleted(updateTask);
+        saveCompletedTaskToStorage(updateTask)
         setTodos(updatedTodos);
         saveTaskToStorage(updatedTodos)
   };
@@ -132,6 +141,7 @@ sessionStorage.setItem("task",true);
         setTodos(updateTodos);
         saveTaskToStorage(updateTodos)
         setIsCompleted(updatedTodos);
+        saveCompletedTaskToStorage(updatedTodos)
   }
 
   return (
@@ -144,7 +154,6 @@ sessionStorage.setItem("task",true);
         {filtered ? todos.length>0 &&  <TaskTitle title = "Favorites" handleTaskArrow={handleTaskArrow} arrow= {arrow}  handleAddTodo={handleAddTodo}/>
                   : todos.length>0 &&  <TaskTitle title = "Tasks" handleTaskArrow={handleTaskArrow} arrow= {arrow}  handleAddTodo={handleAddTodo}/>}
 
-        {todos.length>0 && <span className="task--timestamp">{new Date().toLocaleDateString()}</span>}
 
        {filtered ? arrow?  allTask.map((el, i) => (
             <TodoItems
