@@ -8,13 +8,17 @@ import CompletedTasksTitle from "./CompletedTasksTitle";
 import CompletedTodoItems from "./CompletedTodoItems";
 import Footer from "./Footer"
 
+let dates = new Date().toLocaleString();
 
+let createdDate=[];
 
 export default function Todo() {
   // const storedTodos = JSON.parse(sessionStorage.getItem("Todos") || "[]"); 
   // const storedCompletedTodos = JSON.parse(sessionStorage.getItem("CompletedTodos") || "[]");// getting stored Todos from session storage
   const storedTodos = JSON.parse(localStorage.getItem("Todos") || "[]");
   const storedCompletedTodos = JSON.parse(localStorage.getItem("CompletedTodos") || "[]");
+  const storedAllTasks = JSON.parse(localStorage.getItem("AllTasks") || "[]");
+  
   const [todos, setTodos] = useState(storedTodos);
   const [isCompleted,setIsCompleted] = useState(storedCompletedTodos)
   const [arrow,setArrow] = useState(true);
@@ -23,20 +27,8 @@ export default function Todo() {
   const [filtered,setFiltered] = useState(false)
   const [ascend, setAscend]= useState(false)
 
-  // Tried to use useEffect Hook for storing data in session storage
- 
-  // useEffect(()=>{
-  //     const storedTodos = JSON.parse(sessionStorage.getItem("Todos") || "[]");
-  //     setTodos(storedTodos);
-  // },[])
-
-  // useEffect(()=>{
-  //     sessionStorage.setItem("Todos",JSON.stringify(todos));
-  // },[todos])
-
 
   const saveTaskToStorage = (updatedTodos) =>{
-   // sessionStorage.setItem("Todos",JSON.stringify(updatedTodos));
    localStorage.setItem("Todos",JSON.stringify(updatedTodos));
   }
 
@@ -44,17 +36,26 @@ export default function Todo() {
     localStorage.setItem("CompletedTodos",JSON.stringify(updatedTodos))
   }
 
+  const saveAllTasksToStorage = (updatedTodos) => {
+    localStorage.setItem("AllTasks",JSON.stringify(updatedTodos))
+  }
+
 
   const handleAddTodo = (text) => {
+     if(text.trim() !== ''){
           const newTodo = {
           title: text,
           status: false,
           id: Date.now(),
-          created:new Date().getTime(),
+          created:new Date().toLocaleString(),
         };
         const updatedTodos = [newTodo , ...todos]
         setTodos(updatedTodos);
         saveTaskToStorage(updatedTodos)
+    }else{
+        alert('Empty Task Input..!');
+         }
+
  };
 
   const handleTaskArrow = () =>{
@@ -109,40 +110,82 @@ export default function Todo() {
         saveCompletedTaskToStorage(deleteTodos)
   };
 
+  const handleFavoriteDelete = (id) => {
+    handleDeleteTask(id);
+    const deleteTodos = allTask.filter((todo) => todo.id !== id);
+    setAllTask(deleteTodos);
+    saveAllTasksToStorage(deleteTodos)
+};
 
 
 
-
-  const radioButtonClick = (id,title) => {
+  const radioButtonClick = (id,title,created) => {
         const updatedTodos = todos.filter((todo) => todo.id !== id);
           const newTodo = {
             title: title,
             status: false,
             id: id,
+            completed:new Date().toLocaleString(),
+            created:created,
           };
-          let updateTask = [...isCompleted,newTodo]
+          let updateTask = [newTodo,...isCompleted]
         setIsCompleted(updateTask);
         saveCompletedTaskToStorage(updateTask)
         setTodos(updatedTodos);
-        saveTaskToStorage(updatedTodos)
+        saveTaskToStorage(updatedTodos);
+        setFiltered(false);
   };
 
 
 
 
-  const toggleCompletedTasks = (id,title) =>{
+  const toggleCompletedTasks = (id,title,created) =>{
         const updatedTodos = isCompleted.filter((todo) => todo.id !== id);
         const newTodo = {
           title: title,
           status: false,
           id: id,
+          created:created,
         };
-        const updateTodos = [...todos , newTodo]
+        const updateTodos = [...todos,newTodo]
         setTodos(updateTodos);
         saveTaskToStorage(updateTodos)
         setIsCompleted(updatedTodos);
         saveCompletedTaskToStorage(updatedTodos)
   }
+
+  let todosMap=new Map()
+   todos.forEach((todo)=>{
+    let date=todo.created.split(",")[0]
+    let arr = []
+    
+    if(todosMap.has(date)){
+        let value=todosMap.get(date);
+        arr.push(value)
+        todosMap.set(date,[...value,todo])
+      }
+      else{
+        todosMap.set(date,[todo])
+      }
+})
+const arrayOfObjects = Array.from(todosMap.entries()).map(([key, value]) => ({ key, value }));
+
+ let completedTodosMap = new Map();
+ isCompleted.forEach((el)=>{
+  let date=el.completed.split(",")[0]
+  let arr = [];
+
+  if(completedTodosMap.has(date)){
+    let value=completedTodosMap.get(date);
+    arr.push(value)
+    completedTodosMap.set(date,[...value,el])
+  }
+  else{
+    completedTodosMap.set(date,[el])
+  }
+ })
+
+ const completedArrayOfObjects = Array.from(completedTodosMap.entries()).map(([key, value]) => ({ key, value }));
 
   return (
     <>
@@ -155,39 +198,58 @@ export default function Todo() {
                   : todos.length>0 &&  <TaskTitle title = "Tasks" handleTaskArrow={handleTaskArrow} arrow= {arrow}  handleAddTodo={handleAddTodo}/>}
 
 
-       {filtered ? arrow?  allTask.map((el, i) => (
+
+       {filtered ? arrow? allTask.length > 0 ? allTask.map((el, i) => (
             <TodoItems
               key={el.id}
               id={el.id}
               title={el.title}
               status={el.status}
+              created={el.created}
               radioButtonClick={radioButtonClick}
-              handleDelete={handleDeleteTask}
+              handleDelete={handleFavoriteDelete}
               handleToggle={handleFavorite}
             />
-          )) : "" : arrow?  todos.map((el, i) => (
-            <TodoItems
-              key={el.id}
-              id={el.id}
-              title={el.title}
-              status={el.status}
-              radioButtonClick={radioButtonClick}
-              handleDelete={handleDeleteTask}
-              handleToggle={handleFavorite}
-            />
-          )) : ""}
+          )) : "No Favorites" : "" : arrow?  arrayOfObjects.map((item)=>(
+            <>
+               <p className="date">{item.key}</p>
+               {item.value.map((el)=>(
+                  <TodoItems
+                  key={el.id}
+                  id={el.id}
+                  title={el.title}
+                  status={el.status}
+                  created={el.created}
+                  radioButtonClick={radioButtonClick}
+                  handleDelete={handleDeleteTask}
+                  handleToggle={handleFavorite}
+                  />
+               ))}
+            </>
+          )) : "Tasks Hidden"}
 
         {filtered ? "" : isCompleted.length>0 && <CompletedTasksTitle title = "Completed Tasks" handleCompletedTaskArrow={handleCompletedTaskArrow} arrow= {completedTaskArrow}/>}
         {filtered? "" : completedTaskArrow ?
-             isCompleted.map((el,i)=>(
-              <CompletedTodoItems
-               key={el.id}
-               id={el.id}
-              title={el.title}
-              status={el.status}
-              toggleCompletedTasks={toggleCompletedTasks}
-              handleDeleteCompletedTask={handleDeleteCompletedTask}/>
-             )) :""}
+             completedArrayOfObjects.map((item)=>(
+              <>
+                 <p className="date">{item.key}</p>
+                 {item.value.map((el)=>(
+                    <CompletedTodoItems
+                    key={el.id}
+                    id={el.id}
+                    title={el.title}
+                    status={el.status}
+                    created={el.created}
+                    completed={el.completed}
+                    handleDeleteCompletedTask={handleDeleteCompletedTask}
+                    toggleCompletedTasks={toggleCompletedTasks}
+                    />
+                 ))}
+              </>
+            )):""}
+
+             
+           
             <Footer/>
       </div>
     </>

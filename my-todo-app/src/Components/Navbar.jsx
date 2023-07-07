@@ -28,10 +28,9 @@ export default function Navbar(props){
            <h1 className="nav--title">Insure Pro 2.0 Todo App</h1>
            <div className="sort">
             
-            { <img className="sort--icon" src={myImage} alt="" /> }
+             <img className="sort--icon" src={myImage} alt="" />
            <p className="sort--text" onClick={handleSortingFunc}>Sort</p>
            <button className="favorite--button" onClick={handleFilter}>{filtered ? "All Tasks" : "Favorites"}</button>
-           
            </div>
        </nav>
     )
