@@ -1,19 +1,7 @@
 import { useState } from "react";
 
 export default function AddTodo(props) {
-  const [text, setText] = useState("");
-  const { handleAddTodo } = props;
-
-  const handleKeyPress = (event) => {
-    if (event.key === 'Enter') {
-        text && handleAddTodo(text);
-        setText("");
-    }
-  };
-
-  const handleChange = (e) => {
-    setText(e.target.value);
-  };
+  const {editTaskId,inputValue,handleKeyPress,handleChange,editTask,cancelEdit} = props;
 
 
   return (
@@ -23,9 +11,15 @@ export default function AddTodo(props) {
         className="input"
         type="text"
         onChange={handleChange}
-        value={text}
+        value={inputValue}
         placeholder="+ Add a Task"
       />
+      {editTaskId ? (
+          <>
+            <button className="edit--save" onClick={editTask}>Save</button>
+            <button className="edit--cancel" onClick={cancelEdit}>Cancel</button>
+          </>) : ""
+          }
     </>
   );
 }
