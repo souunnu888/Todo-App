@@ -22,7 +22,7 @@ export default function Navbar(props){
   if(+time2 >= 5 && time3 === "am"){
     console.log("morning")
     Icon = morning;
-  } else if(+time2 >= 12 || +time2 < 5 && time3==="pm"){
+  } else if(+time2 >= 12 || +time2 < 4 && time3==="pm"){
     console.log("Afternoon")
     Icon = afternoon;
   } else if(+time2 >= 4 || +time2 <= 9 && time3==="pm") {
