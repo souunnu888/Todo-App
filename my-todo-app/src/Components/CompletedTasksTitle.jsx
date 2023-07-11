@@ -10,7 +10,7 @@ export default function CompletedTasksTitle(props){
                <img className="completed--task--downarrow" src={props.arrow? darrow : sarrow} onClick={props.handleCompletedTaskArrow} alt="" />
                <h4 className="task--heading">{props.title}</h4>
            </div>
-           <hr className="custom--hr"/>
+           <hr className="custom--hr2"/>
        </div>
     )
 }

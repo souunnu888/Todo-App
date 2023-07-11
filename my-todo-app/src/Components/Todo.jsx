@@ -1,9 +1,8 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import TodoItems from "./TodoItems";
 import AddTodo from "./AddTodo";
 import Navbar from "./Navbar";
 import TaskTitle from "./TaskTitle";
-import reddelete from "../Images/reddelete.png";
 import CompletedTasksTitle from "./CompletedTasksTitle";
 import CompletedTodoItems from "./CompletedTodoItems";
 import Footer from "./Footer"
@@ -174,8 +173,8 @@ export default function Todo() {
         }
         return todo;
       });
-
       setTodos(updatedTasks);
+      saveTaskToStorage(updatedTasks);
       setInputValue('');
       setEditTaskId(null);
     }
@@ -261,7 +260,8 @@ export default function Todo() {
                   />
                ))}
             </>
-          )) : ""}
+          )) :""}
+
           
           {/* if Filtered is true display Nothing else Display title as Completed tasks */}
           {filtered ? "" : isCompleted.length>0 && <CompletedTasksTitle title = "Completed Tasks" handleCompletedTaskArrow={handleCompletedTaskArrow} arrow= {completedTaskArrow}/>}

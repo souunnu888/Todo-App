@@ -2,6 +2,7 @@ import reddelete from "../Images/reddelete.png";
 import star from "../Images/star.png";
 import orangestar from "../Images/orangestar.png";
 import edit from"../Images/edit1.png"
+import bluecircle from "../Images/bluecircle.png"
 
 export default function TodoItems(props) {
   const {
@@ -24,7 +25,7 @@ export default function TodoItems(props) {
     <div className="all--todos">
       <div className="todo">
           <div className="todo--right "> 
-            <input type="radio" onClick={() => radioButtonClick(id, title,created)} title="Click to complete"/>
+          <img src={bluecircle} alt="" className="bluecircle" onClick={() => radioButtonClick(id, title,created)}/>
             <span className="todo--desc">
               {title}{" "}
               <span className="created--time">

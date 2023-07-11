@@ -63,6 +63,7 @@ h1,h2,h3,h4,h5,h6,p,div{
 }
 .sun--icon{
   width: 15%;
+  margin-left: 10px;
 }
 .nav--title
 {
@@ -202,6 +203,12 @@ h1,h2,h3,h4,h5,h6,p,div{
   text-align: left;
   margin-left: 10px;
 }
+.todo--des{
+  width: 100%;
+  /* border: 1px solid red; */
+  text-align: left;
+  margin-left: 10px;
+}
 .todo--right>input:checked{
   background-color:rgb(75, 130, 231) ;
 }
@@ -295,4 +302,20 @@ h1,h2,h3,h4,h5,h6,p,div{
 .edit--cancel:hover{
   background-color: rgb(156, 7, 7);
   color: white;
+}
+
+.bluetick {
+  width: 20px;
+}
+
+.bluecircle{
+  width: 16px;
+}
+
+.custom--hr2{
+  width: 87%;
+}
+
+.custom--hr1{
+  width: 93%;
 }

@@ -11,7 +11,7 @@ export default function TaskTitle(props){
                <img className="task--downarrow" src={props.arrow? darrow : sarrow} onClick={props.handleTaskArrow} alt="" />
                <h4 className="task--heading" onClick={props.showAllTasks}>{props.title}</h4>
            </div>
-           <hr className="custom--hr"/>
+           <hr className="custom--hr1"/>
        </div>
     )
 }
